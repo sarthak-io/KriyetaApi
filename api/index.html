@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask API Test</title>
+</head>
+<body>
+    <h1>Flask API Test</h1>
+
+    <form id="mintForm">
+        <label for="name">Name to Mint:</label>
+        <input type="text" id="name" name="name" required>
+        
+       
+
+        <button type="button" onclick="mintNFT()">Mint NFT</button>
+    </form>
+
+    <p id="response"></p>
+
+    <script>
+        function mintNFT() {
+            const name = document.getElementById('name').value;
+            
+
+            // Send a POST request to the Flask API
+            fetch('http://127.0.0.1:5000/mint_nft', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the response from the Flask API
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
